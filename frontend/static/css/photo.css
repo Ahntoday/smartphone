@@ -1,0 +1,105 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    width: 27rem;
+    height: 3rem;
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    border: solid 1px #707070;
+    background-color: #fff;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 27rem;
+    height: 40rem;
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+    border: solid 1px #707070;
+    background-color: #fffae2;
+}
+
+.image_container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    padding: 1rem 0 1rem 0;
+    border-bottom: solid 1px #707070;
+    background-color: #ffc364;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.image_item {
+    width: 5rem;
+    height: 5rem;
+}
+
+#image_btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    border: solid 1px #707070;
+    padding: 0;
+    cursor: pointer;
+}
+
+#image_btn:focus {
+    /* 클릭시 */
+    border: solid 5px #ff7d1d;
+}
+
+#image_btn > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    
+}
+
+.image_item {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+}
+
+.image_area {
+    width: 100%;
+    height: 80%;
+}
+
+.image_area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+}
+
+.hidden {
+    position: absolute !important; 
+    top:auto;
+    left:-10000px; 
+    width:1px; 
+    height:1px; 
+    overflow:hidden;
+}
