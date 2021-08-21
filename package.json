@@ -1,0 +1,23 @@
+{
+  "name": "smartphone",
+  "version": "1.0.0",
+  "description": "📱 바닐라 자바스크립트를 활용한 SPA 스마트폰 에뮬레이션 💛",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahntoday/smartphone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahntoday/smartphone/issues"
+  },
+  "homepage": "https://github.com/Ahntoday/smartphone#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
