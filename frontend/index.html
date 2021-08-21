@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone</title>
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/alarm.css">
+    <link rel="stylesheet" href="static/css/memo.css">
+    <link rel="stylesheet" href="static/css/photo.css">
+</head>
+
+<body>
+    <header>
+        <div class="back">
+            <button id="header_back_btn"><a href="/" class="nav_link" data-link>back</a></button>
+        </div>
+        <span>2021년 8월 21일 11시 44분 32초</span>
+        <div class="new">
+            <button id="header_new_btn">new</button>
+        </div>
+    </header>
+    <section id="section">
+        <h2 class="hidden">홈 화면</h2>
+        <div class="app">
+            <a href="/alarm" class="nav_link" data-link>알람</a>
+        </div>
+        <div class="app">
+            <a href="/memo" class="nav_link" data-link>메모</a>
+        </div>
+        <div class="app">
+            <a href="/photo" class="nav_link" data-link>사진</a>
+        </div>
+    </section>
+    <script type="module" src="/static/js/index.js"></script>
+</body>
+
+</html>
