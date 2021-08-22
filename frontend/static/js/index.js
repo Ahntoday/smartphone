@@ -39,7 +39,9 @@ const router = async () => {
 
     const parser = new DOMParser();
     const parsedDocument = parser.parseFromString(view.getSectionHtml(), "text/html");
-    console.dir(parsedDocument);
+    // console.dir(parsedDocument);
+
+    runJS(match.route.path, view);
 };
 
 window.addEventListener("popstate", router);
@@ -51,6 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
             navigateTo(e.target.href);
         }
     });
+
     router();
 });
 
+const runJS = (path, view) => {
+    if (path == '/photo') {
+        view.runPhotoJS();
+    }
+}

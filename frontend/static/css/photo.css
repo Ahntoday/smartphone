@@ -56,7 +56,7 @@ section {
     white-space: nowrap;
 }
 
-#image_btn {
+.image_btn {
     width: 70px;
     height: 70px;
     border-radius: 18px;
@@ -66,17 +66,16 @@ section {
     box-sizing: content-box;
 }
 
-#image_btn:focus {
+.image_btn:focus {
     /* 클릭시 */
     border: solid 3px #ff7d1d;
 }
 
-#image_btn img {
+.image_of_btn {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 18px;
-    
 }
 
 .image_area {
@@ -84,10 +83,15 @@ section {
     height: 80%;
 }
 
-.image_area img {
+#big_image_container {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+}
+
+#big_image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     border-bottom-left-radius: 23px;
     border-bottom-right-radius: 23px;
 }
