@@ -38,8 +38,8 @@ section {
     background-color: #fffae2;
 }
 
-.input_container {
-    display: flex;
+#input_container {
+    /* display: flex; */
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -47,6 +47,7 @@ section {
     padding: 2rem 1rem 2rem 1rem;
     border-bottom: solid 1px #707070;
     background-color: #ffc364;
+    display: none;
 }
 
 #alarm_list {

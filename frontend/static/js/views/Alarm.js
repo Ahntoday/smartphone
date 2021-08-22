@@ -17,7 +17,7 @@ export default class extends AbstractView {
     async getSectionHtml() {
         return `
         <h2 class="hidden">알람 앱</h2>
-        <div class="input_container">
+        <div id="input_container">
             <div class="input_contents">
                 <select name="ampm" id="select_am_pm" onchange="setAMPM()">
                     <option value="오전">오전</option>
@@ -31,12 +31,12 @@ export default class extends AbstractView {
             <button id="save_btn" onclick="makeNewAlarmItem()">저장</button>
         </div>
         <div id="alarm_list">
-            <!-- <div class="alarm_item">
+            <div class="alarm_item">
                 <div class="alarm_content">
                     <span class="alarm_text">오전 6시 15분</span>
                 </div>
                 <button id="delete_btn_0" class="delete_btn" onclick="deleteAlarmItem(this)">삭제</button>
-            </div> -->
+            </div>
         </div>
         `;
     }
@@ -56,6 +56,13 @@ export default class extends AbstractView {
         let minute = 0;
         const setMin = () => {
             minute = document.getElementById('minute').value;
+        }
+
+        const showInputContainer = () => {
+            let inputContainer = document.getElementById('input_container');
+            let alarmList = document.getElementById('alarm_list');
+            inputContainer.style.display = 'flex';
+            alarmList.style.height = '85%';
         }
 
         const makeNewAlarmItem = () => {
@@ -82,8 +89,12 @@ export default class extends AbstractView {
             alarmItem.appendChild(alarmContent);
             alarmItem.appendChild(deleteBtn);
             alarmContent.appendChild(alarmText);
-
             alarmList.appendChild(alarmItem);
+
+            // 인풋컨테이너 닫기
+            let inputContainer = document.getElementById('input_container');
+            inputContainer.style.display = 'none';
+            alarmList.style.height = '100%';
         }
 
         const deleteAlarmItem = (child) => {
@@ -91,6 +102,12 @@ export default class extends AbstractView {
             let alarmList = alarmItem.parentNode;
             alarmList.removeChild(alarmItem);
         }
+
+        let newBtn = document.getElementById('header_new_btn');
+        newBtn.onclick = showInputContainer;
+
+        let defaultItemBtn = document.getElementById('delete_btn_0');
+        defaultItemBtn.onclick = e => deleteAlarmItem(e.currentTarget);
 
         document.getElementById('select_am_pm').onchange = setAMPM;
         document.getElementById('hour').onchange = setHour;
