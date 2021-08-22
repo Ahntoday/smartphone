@@ -33,7 +33,7 @@ export default class extends AbstractView {
         <div id="alarm_list">
             <div class="alarm_item">
                 <div class="alarm_content">
-                    <span class="alarm_text">오전 6시 15분</span>
+                    <span class="alarm_text">오전 6시 10분</span>
                 </div>
                 <button id="delete_btn_0" class="delete_btn" onclick="deleteAlarmItem(this)">삭제</button>
             </div>
@@ -42,18 +42,22 @@ export default class extends AbstractView {
     }
 
     async runAlarmJS() {
+        let newBtn = document.getElementById('header_new_btn');
+        let defaultItemBtn = document.getElementById('delete_btn_0');
         let ampmValue = '오전';
+        let hour = 0;
+        let minute = 0;
+        let alarmAlertList = [];
+
         const setAMPM = () => {
             let ampm = document.getElementById('select_am_pm');
             ampmValue = ampm.options[ampm.selectedIndex].value;
         }
 
-        let hour = 0;
         const setHour = () => {
             hour = document.getElementById('hour').value;
         }
 
-        let minute = 0;
         const setMin = () => {
             minute = document.getElementById('minute').value;
         }
@@ -66,23 +70,23 @@ export default class extends AbstractView {
         }
 
         const makeNewAlarmItem = () => {
-            let combinedTime = ampmValue + ' ' + String(hour) + '시 ' + String(minute) + '분';
-            // console.log(combinedTime);
+            const combinedTime = ampmValue + ' ' + String(hour) + '시 ' + String(minute) + '분';
+            console.log(combinedTime);
+            setAlarmAlert(ampmValue, Number(hour), Number(minute));
             let alarmList = document.querySelector('#alarm_list');
             let alarmItem = document.createElement('div');
-            alarmItem.classList.add('alarm_item');
-
             let alarmContent = document.createElement('div');
+            let deleteBtn = document.createElement('button');
+            let alarmText = document.createElement('span');
+
+            alarmItem.classList.add('alarm_item');
             alarmContent.classList.add('alarm_content');
 
-            let deleteBtn = document.createElement('button');
             deleteBtn.id = 'delete_btn_' + String(document.getElementById("alarm_list").childElementCount);
-
             deleteBtn.classList.add('delete_btn');
             deleteBtn.textContent = '삭제';
             deleteBtn.addEventListener('click', e => deleteAlarmItem(e.currentTarget));
 
-            let alarmText = document.createElement('span');
             alarmText.classList.add('alarm_text');
             alarmText.textContent = combinedTime;
 
@@ -92,26 +96,85 @@ export default class extends AbstractView {
             alarmList.appendChild(alarmItem);
 
             // 인풋컨테이너 닫기
-            let inputContainer = document.getElementById('input_container');
+            const inputContainer = document.getElementById('input_container');
             inputContainer.style.display = 'none';
             alarmList.style.height = '100%';
         }
 
         const deleteAlarmItem = (child) => {
-            let alarmItem = child.parentNode;
-            let alarmList = alarmItem.parentNode;
+            const alarmItem = child.parentNode;
+            const alarmList = alarmItem.parentNode;
+            const text = alarmItem.childNodes[0].innerText.split(' ');
+            const ampmtext = text[0];
+            const hourtext = Number(text[1].split('시')[0]);
+            const mintext = Number(text[2].split('분')[0]);
+
             alarmList.removeChild(alarmItem);
+            deleteAlarmAlert(ampmtext, hourtext, mintext);
         }
 
-        let newBtn = document.getElementById('header_new_btn');
+        const matchHour = (ampm, hour, nowTime) => {
+            if (ampm === '오전') {
+                return hour === nowTime.getHours();
+            }
+            if (ampm === '오후') {
+                return hour + 12 === nowTime.getHours();
+            }
+        }
+
+        const matchMinute = (min, nowTime) => {
+            return min === nowTime.getMinutes();
+        }
+
+        const setAlarmAlert = (ampm, hour, minute) => {
+            let time = {
+                "ampm": ampm,
+                "hour": hour,
+                "minute": minute
+            };
+            alarmAlertList.push(time);
+            console.log('현재 알람 시간 목록');
+            console.log(alarmAlertList);
+        }
+
+        const deleteAlarmAlert = (ampmtext, hourtext, mintext) => {
+            const idx = alarmAlertList.findIndex(item => {
+                return (item.ampm === ampmtext && item.hour === hourtext && item.minute === mintext)
+            });
+            alarmAlertList.splice(idx, 1);
+            console.log('현재 알람 시간 목록');
+            console.log(alarmAlertList);
+        }
+
+        const countTime = () => {
+            let nowTime = new Date();
+            // console.log(nowTime);
+            for (let i = 0; i < alarmAlertList.length; i++) {
+                const ampmContent = alarmAlertList[i].ampm;
+                const hourContent = alarmAlertList[i].hour;
+                const minuteContent = alarmAlertList[i].minute;
+                let spanTags = document.querySelectorAll('.alarm_text');
+
+                if (matchHour(ampmContent, hourContent, nowTime) && matchMinute(minuteContent, nowTime)) {
+                    alert(`알람! ${ampmContent} ${hourContent}시 ${minuteContent}분입니다.`);
+                    // 현재 span태그들의 innerText를 비교하여, 같으면 해당 span의 부모를 deleteAlarmItem의 child 인자로 해서 삭제.
+                    for (let i = 0; i < spanTags.length; i++) {
+                        if (spanTags[i].innerText == `${ampmContent} ${String(hourContent)}시 ${String(minuteContent)}분`) {
+                            deleteAlarmItem(spanTags[i].parentNode);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         newBtn.onclick = showInputContainer;
-
-        let defaultItemBtn = document.getElementById('delete_btn_0');
         defaultItemBtn.onclick = e => deleteAlarmItem(e.currentTarget);
-
         document.getElementById('select_am_pm').onchange = setAMPM;
         document.getElementById('hour').onchange = setHour;
         document.getElementById('minute').onchange = setMin;
         document.getElementById('save_btn').onclick = makeNewAlarmItem;
+
+        setInterval(countTime, 1000);
     }
 }
