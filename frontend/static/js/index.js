@@ -36,10 +36,7 @@ const router = async () => {
     document.querySelector("#header_back_btn").style.visibility = await view.getBackBtnVisibility();
     document.querySelector("#header_new_btn").style.visibility = await view.getNewBtnVisibility();
     document.querySelector("#section").innerHTML = await view.getSectionHtml();
-
-    const parser = new DOMParser();
-    const parsedDocument = parser.parseFromString(view.getSectionHtml(), "text/html");
-    // console.dir(parsedDocument);
+    await view.getHeaderClockHtml();
 
     runJS(match.route.path, view);
 };

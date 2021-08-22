@@ -36,8 +36,12 @@ section {
     background-color: #fffae2;
 }
 
-.header_back_btn, .header_new_btn{
+#header_back_btn, #header_new_btn{
     visibility: hidden;
+}
+
+#clock {
+    text-align: center;
 }
 
 .app {
@@ -47,11 +51,12 @@ section {
     width: 4.5rem;
     height: 4.5rem;
     margin: 1rem;
-    padding: 1rem 1rem;
+    /* padding: 1rem 1rem; */
     border-radius: 18px;
     border: solid 1px #707070;
     background-color: #fff;
     cursor: pointer;
+    text-align: center;
 }
 
 .hidden {
