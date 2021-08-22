@@ -58,6 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const runJS = (path, view) => {
+    if (path == '/alarm') {
+        view.runAlarmJS();
+    }
     if (path == '/photo') {
         view.runPhotoJS();
     }
