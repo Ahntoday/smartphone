@@ -61,6 +61,11 @@ const runJS = (path, view) => {
     if (path == '/alarm') {
         view.runAlarmJS();
     }
+
+    if (path == '/memo') {
+        view.runMemoJS();
+    }
+
     if (path == '/photo') {
         view.runPhotoJS();
     }

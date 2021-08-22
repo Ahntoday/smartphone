@@ -38,14 +38,15 @@ section {
     background-color: #fffae2;
 }
 
-.input_container {
+#input_container {
     width: 100%;
     height: 15%;
     border: solid 1px #707070;
     background-color: #ffc364;
+    display: none;
 }
 
-.memo_input {
+#memo_input {
     width: 100%;
     height: 100%;
     padding: 1rem 1rem;
@@ -54,18 +55,19 @@ section {
     outline: none;
 }
 
-.memo_list {
+#memo_list {
     width: 100%;
     height: 85%;
+    overflow-y: auto;
 }
 
-#memo_item {
+.memo_item {
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    height: 3.3rem;
-    padding: 0.5rem 0.5rem;
-    /* 버튼 클릭시 클릭한 아이템만 높이 변경. 토글로 구현 */
+    height: 50px;
+    padding: 0.3rem 0.3rem;
+    /* 버튼 클릭시 클릭한 아이템만 높이 변경. */
     /* height: auto; */
     overflow: hidden;
     border-left: 0;
@@ -73,16 +75,27 @@ section {
     border-top: 0;
     border-bottom: solid 3px #ffc364;
     background-color: #fff;
-    text-align: left;
-    color: #484848;
     outline: none;
     cursor: pointer;
+    text-align: left;
+    color: #484848;
 }
 
-#memo_item:hover {
+.memo_item:hover {
     background-color: #fffae2;
 }
 
+.memo_item_text {
+    display: inline-block; 
+    width: 420px;
+    height: 100%;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: normal; 
+    line-height: 1.5; 
+    text-align: left; 
+    word-wrap: break-word;
+}
 .hidden {
     position: absolute !important; 
     top:auto;
