@@ -49,10 +49,14 @@ export default class extends AbstractView {
     }
 
     async runMemoJS() {
+        let newBtn = document.getElementById('header_new_btn');
+        let memoInput = document.getElementById('memo_input');
+        let memoText = document.getElementById('memo_item_text_0');
         let showFullTextState = false;
+        let memoData = {};
+
         const showFullText = (child) => {
             let clickedItem = child.parentNode;
-            console.log(clickedItem);
             if (showFullTextState === false) { // 펼쳐진게 없으면
                 clickedItem.style.height = 'auto';
                 showFullTextState = true;
@@ -75,34 +79,55 @@ export default class extends AbstractView {
             memoList.style.height = '85%';
         }
 
-        const makeNewMemo = () => {
+        const makeNewMemoWithKeyCheck = () => {
             if (window.event.keyCode == 13) {
-                let memoList = document.querySelector('#memo_list');
-                let memoItem = document.createElement('button');
-                let memoItemText = document.createElement('span');
-                let inputContainer = document.getElementById('input_container');
-
-                memoItem.id = 'memo_item_' + String(document.getElementById("memo_list").childElementCount);
-                memoItem.classList.add('memo_item');
-                memoItemText.id = 'memo_item_text_' + String(document.getElementById("memo_list").childElementCount);
-                memoItemText.classList.add('memo_item_text');
-                memoItemText.addEventListener('click', e => showFullText(e.currentTarget));
-                memoItemText.innerHTML = memoInput.value;
-                memoList.appendChild(memoItem);
-                memoItem.appendChild(memoItemText);
-                memoInput.value = null;
-                inputContainer.style.display = 'none';
-                memoList.style.height = '100%';
+                makeNewMemo(memoInput.value);
             }
         }
 
-        let memoInput = document.getElementById('memo_input');
-        memoInput.onkeyup = makeNewMemo;
+        const makeNewMemo = (memo) => {
+            let memoList = document.querySelector('#memo_list');
+            let memoItem = document.createElement('button');
+            let memoItemText = document.createElement('span');
+            let inputContainer = document.getElementById('input_container');
 
-        let memoText = document.getElementById('memo_item_text_0');
+            memoItem.id = 'memo_item_' + String(document.getElementById("memo_list").childElementCount);
+            memoItem.classList.add('memo_item');
+            memoItemText.id = 'memo_item_text_' + String(document.getElementById("memo_list").childElementCount);
+            memoItemText.classList.add('memo_item_text');
+            memoItemText.addEventListener('click', e => showFullText(e.currentTarget));
+            memoItemText.innerHTML = memo;
+            // console.log(memoInput);
+            saveStorageData(memo);
+
+            memoList.appendChild(memoItem);
+            memoItem.appendChild(memoItemText);
+
+            memoInput.value = null;
+            inputContainer.style.display = 'none';
+            memoList.style.height = '100%';
+        }
+
+        const saveStorageData = (newMemo) => {
+            memoData[Object.keys(memoData).length] = newMemo;
+            // console.log(memoData);
+            let serializedData = JSON.stringify(memoData);
+            localStorage.setItem("memoData", serializedData);
+        }
+
+        const bringStorageData = () => {
+            let deserializedData = JSON.parse(localStorage.getItem("memoData"));
+            for (let key in deserializedData) {
+                let broughtMemo = deserializedData[key];
+                makeNewMemo(broughtMemo);
+            }
+        }
+
+        memoInput.onkeyup = makeNewMemoWithKeyCheck;
         memoText.onclick = e => showFullText(e.currentTarget);
-
-        let newBtn = document.getElementById('header_new_btn');
         newBtn.onclick = showInputContainer;
+        bringStorageData();
+
+        // localStorage.clear();
     }
 }
