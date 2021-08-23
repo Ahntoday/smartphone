@@ -41,19 +41,6 @@ const router = async () => {
     runJS(match.route.path, view);
 };
 
-window.addEventListener("popstate", router);
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.body.addEventListener("click", e => {
-        if (e.target.matches("[data-link]")) {
-            e.preventDefault();
-            navigateTo(e.target.href);
-        }
-    });
-
-    router();
-});
-
 const runJS = (path, view) => {
     if (path == '/') {
         view.runHomeJS();
@@ -71,3 +58,19 @@ const runJS = (path, view) => {
         view.runPhotoJS();
     }
 }
+
+const navigateToclickHref = () => {
+    document.body.addEventListener("click", e => {
+        if (e.target.matches("[data-link]")) {
+            e.preventDefault();
+            navigateTo(e.target.href);
+        }
+    });
+}
+
+window.addEventListener("popstate", router);
+
+document.addEventListener("DOMContentLoaded", () => {
+    navigateToclickHref();
+    router();
+});
