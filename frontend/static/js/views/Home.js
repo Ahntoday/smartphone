@@ -46,8 +46,6 @@ export default class extends AbstractView {
         section.addEventListener('dragover', e => {
             e.preventDefault();
             const afterElement = getDragAfterElement(section, e.clientX);
-
-            console.log(afterElement);
             const draggable = document.querySelector('.dragging');
             if (afterElement == null) { // 다음 것이 없다면
                 section.appendChild(draggable);
@@ -63,10 +61,8 @@ export default class extends AbstractView {
             return draggableElements.reduce((closest, child) => {
                 const box = child.getBoundingClientRect();
                 const offset = x - box.left - box.width / 2;
-                console.log(offset);
                 if (offset < 0 && offset > closest.offset) { // 0보다는 작지만 0에 가장 근접한 것이 가장 가까운 것
                     return { offset: offset, element: child };
-
                 }
                 else {
                     return closest;
