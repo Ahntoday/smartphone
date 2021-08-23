@@ -31,23 +31,24 @@ export default class extends AbstractView {
             <button id="save_btn" onclick="makeNewAlarmItem()">저장</button>
         </div>
         <div id="alarm_list">
-            <div class="alarm_item">
+            <!-- <div class="alarm_item">
                 <div class="alarm_content">
                     <span class="alarm_text">오전 6시 10분</span>
                 </div>
                 <button id="delete_btn_0" class="delete_btn" onclick="deleteAlarmItem(this)">삭제</button>
-            </div>
+            </div> -->
         </div>
         `;
     }
 
     async runAlarmJS() {
-        let newBtn = document.getElementById('header_new_btn');
-        let defaultItemBtn = document.getElementById('delete_btn_0');
         let ampmValue = '오전';
         let hour = 0;
         let minute = 0;
         let alarmAlertList = [];
+        let alarmData = {};
+        let serializedData = '';
+        let deserializedData = {};
 
         const setAMPM = () => {
             let ampm = document.getElementById('select_am_pm');
@@ -71,13 +72,14 @@ export default class extends AbstractView {
 
         const makeNewAlarmItem = () => {
             const combinedTime = ampmValue + ' ' + String(hour) + '시 ' + String(minute) + '분';
-            console.log(combinedTime);
-            setAlarmAlert(ampmValue, Number(hour), Number(minute));
             let alarmList = document.querySelector('#alarm_list');
             let alarmItem = document.createElement('div');
             let alarmContent = document.createElement('div');
             let deleteBtn = document.createElement('button');
             let alarmText = document.createElement('span');
+
+            // console.log(combinedTime);
+            setAlarmAlert(ampmValue, Number(hour), Number(minute));
 
             alarmItem.classList.add('alarm_item');
             alarmContent.classList.add('alarm_content');
@@ -110,6 +112,7 @@ export default class extends AbstractView {
             const mintext = Number(text[2].split('분')[0]);
 
             alarmList.removeChild(alarmItem);
+            deleteStorageData(ampmtext, hourtext, mintext);
             deleteAlarmAlert(ampmtext, hourtext, mintext);
         }
 
@@ -133,8 +136,8 @@ export default class extends AbstractView {
                 "minute": minute
             };
             alarmAlertList.push(time);
-            console.log('현재 알람 시간 목록');
-            console.log(alarmAlertList);
+            saveStorageData(time);
+            // console.log(alarmAlertList);
         }
 
         const deleteAlarmAlert = (ampmtext, hourtext, mintext) => {
@@ -142,8 +145,42 @@ export default class extends AbstractView {
                 return (item.ampm === ampmtext && item.hour === hourtext && item.minute === mintext)
             });
             alarmAlertList.splice(idx, 1);
-            console.log('현재 알람 시간 목록');
-            console.log(alarmAlertList);
+            // console.log(alarmAlertList);
+        }
+
+        const saveStorageData = (time) => {
+            alarmData[Object.keys(alarmData).length] = time;
+            // console.log(alarmData);
+            serializedData = JSON.stringify(alarmData);
+            localStorage.setItem("alarmData", serializedData);
+        }
+
+
+        const deleteStorageData = (ampmtext, hourtext, mintext) => {
+            deserializedData = JSON.parse(localStorage.getItem("alarmData"));
+            for (let key in deserializedData) {
+                if (findStorageData(deserializedData, key, ampmtext, hourtext, mintext)) {
+                    delete alarmData[key];
+                    break;
+                }
+            }
+            serializedData = JSON.stringify(alarmData);
+            localStorage.setItem("alarmData", serializedData);
+        }
+
+        const findStorageData = (data, key, ampmtext, hourtext, mintext) => {
+            return (data[key].ampm === ampmtext && data[key].hour === hourtext && data[key].minute === mintext)
+        }
+
+        const bringStorageData = () => {
+            deserializedData = JSON.parse(localStorage.getItem("alarmData"));
+            // console.log(deserializedData);
+            for (let key in deserializedData) {
+                ampmValue = deserializedData[key].ampm;
+                hour = deserializedData[key].hour;
+                minute = deserializedData[key].minute;
+                makeNewAlarmItem();
+            }
         }
 
         const countTime = () => {
@@ -163,18 +200,18 @@ export default class extends AbstractView {
                             deleteAlarmItem(spanTags[i].parentNode);
                             break;
                         }
+                        // console.log(alarmAlertList);
                     }
                 }
             }
         }
 
-        newBtn.onclick = showInputContainer;
-        defaultItemBtn.onclick = e => deleteAlarmItem(e.currentTarget);
+        document.getElementById('header_new_btn').onclick = showInputContainer;
         document.getElementById('select_am_pm').onchange = setAMPM;
         document.getElementById('hour').onchange = setHour;
         document.getElementById('minute').onchange = setMin;
         document.getElementById('save_btn').onclick = makeNewAlarmItem;
-
+        bringStorageData();
         setInterval(countTime, 1000);
     }
 }
