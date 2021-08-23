@@ -5,8 +5,6 @@
 
 ## 설치방법
 
------
-
 - npm init
 
 - npm i express
@@ -14,8 +12,6 @@
 
 
 ## 파일구조
-
-----
 
 ```
 ├─frontend
@@ -43,8 +39,6 @@
 
 ## 프로젝트 화면 구성 및 기능
 
------
-
 홈 화면과 3개의 앱(알람, 메모, 사진)으로 총 4개의 화면으로 구성되어 있으며, 
 각 앱에서 BACK 버튼을 누르면 홈화면으로 이동합니다.
 SPA(Single Page Application)로 만들었습니다.
@@ -59,7 +53,7 @@ SPA(Single Page Application)로 만들었습니다.
 
   - 앱은 Drag & Drop으로 서로 위치 이동 가능
 
-    <img src="/Users/ahntoday/Library/Application Support/typora-user-images/image-20210823212709266.png" alt="image-20210823212709266" style="zoom:40%;" />
+    <img width="352" alt="스크린샷 2021-08-23 오후 10 10 07" src="https://user-images.githubusercontent.com/55610868/130453000-e8a5f0f1-bafd-48de-9343-8f2b67d9806d.png" style="zoom:40%;">
 
 
 
@@ -75,7 +69,7 @@ SPA(Single Page Application)로 만들었습니다.
 
   - 알람 리스트 localStorage에 저장하여, 브라우저 Reload 후에도 그대로 존재
 
-    <img src="/Users/ahntoday/Library/Application Support/typora-user-images/image-20210823212910289.png" alt="image-20210823212910289" style="zoom:40%;" />
+    <img width="354" alt="스크린샷 2021-08-23 오후 10 10 20" src="https://user-images.githubusercontent.com/55610868/130453143-f6467ecb-1d69-4a38-8c50-17477e382f04.png" style="zoom:40%;">
 
   
 
@@ -93,7 +87,7 @@ SPA(Single Page Application)로 만들었습니다.
 
   - 모든 메모는 localStorage에 저장하여, 브라우저 Reload 후에도 그대로 존재
 
-    <img src="/Users/ahntoday/Library/Application Support/typora-user-images/image-20210823213711644.png" alt="image-20210823213711644" style="zoom:40%;" />
+    <img width="350" alt="스크린샷 2021-08-23 오후 10 10 33" src="https://user-images.githubusercontent.com/55610868/130453235-6d9b18f9-ffd3-484b-bcee-9ea69229a559.png" style="zoom:40%;">
 
 
 
@@ -104,4 +98,4 @@ SPA(Single Page Application)로 만들었습니다.
   - 사진 선택시 Border 생성
   - 선택된 사진은 아래에 표시되고, 화면에 맞게 줄어듦
 
-  <img src="/Users/ahntoday/Library/Application Support/typora-user-images/image-20210823213332502.png" alt="image-20210823213332502" style="zoom:40%;" />
+  <img width="353" alt="스크린샷 2021-08-23 오후 10 10 42" src="https://user-images.githubusercontent.com/55610868/130453293-28b48936-06b4-436c-bb5e-f073f0aeb86d.png" style="zoom:40%;">
