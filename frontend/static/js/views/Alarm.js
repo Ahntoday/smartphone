@@ -78,7 +78,6 @@ export default class extends AbstractView {
             let deleteBtn = document.createElement('button');
             let alarmText = document.createElement('span');
 
-            // console.log(combinedTime);
             setAlarmAlert(ampmValue, Number(hour), Number(minute));
 
             alarmItem.classList.add('alarm_item');
@@ -137,7 +136,6 @@ export default class extends AbstractView {
             };
             alarmAlertList.push(time);
             saveStorageData(time);
-            // console.log(alarmAlertList);
         }
 
         const deleteAlarmAlert = (ampmtext, hourtext, mintext) => {
@@ -145,12 +143,10 @@ export default class extends AbstractView {
                 return (item.ampm === ampmtext && item.hour === hourtext && item.minute === mintext)
             });
             alarmAlertList.splice(idx, 1);
-            // console.log(alarmAlertList);
         }
 
         const saveStorageData = (time) => {
             alarmData[Object.keys(alarmData).length] = time;
-            // console.log(alarmData);
             serializedData = JSON.stringify(alarmData);
             localStorage.setItem("alarmData", serializedData);
         }
@@ -174,7 +170,6 @@ export default class extends AbstractView {
 
         const bringStorageData = () => {
             deserializedData = JSON.parse(localStorage.getItem("alarmData"));
-            // console.log(deserializedData);
             for (let key in deserializedData) {
                 ampmValue = deserializedData[key].ampm;
                 hour = deserializedData[key].hour;
@@ -185,7 +180,6 @@ export default class extends AbstractView {
 
         const countTime = () => {
             let nowTime = new Date();
-            // console.log(nowTime);
             for (let i = 0; i < alarmAlertList.length; i++) {
                 const ampmContent = alarmAlertList[i].ampm;
                 const hourContent = alarmAlertList[i].hour;
@@ -194,14 +188,16 @@ export default class extends AbstractView {
 
                 if (matchHour(ampmContent, hourContent, nowTime) && matchMinute(minuteContent, nowTime)) {
                     alert(`알람! ${ampmContent} ${hourContent}시 ${minuteContent}분입니다.`);
-                    // 현재 span태그들의 innerText를 비교하여, 같으면 해당 span의 부모를 deleteAlarmItem의 child 인자로 해서 삭제.
-                    for (let i = 0; i < spanTags.length; i++) {
-                        if (spanTags[i].innerText == `${ampmContent} ${String(hourContent)}시 ${String(minuteContent)}분`) {
-                            deleteAlarmItem(spanTags[i].parentNode);
-                            break;
-                        }
-                        // console.log(alarmAlertList);
-                    }
+                    findDeleteAlarmItem(spanTags, ampmContent, hourContent, minuteContent);
+                }
+            }
+        }
+
+        const findDeleteAlarmItem = (spanTags, ampmContent, hourContent, minuteContent) => {
+            for (let i = 0; i < spanTags.length; i++) {
+                if (spanTags[i].innerText == `${ampmContent} ${String(hourContent)}시 ${String(minuteContent)}분`) {
+                    deleteAlarmItem(spanTags[i].parentNode);
+                    break;
                 }
             }
         }
