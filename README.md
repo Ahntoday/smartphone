@@ -21,15 +21,15 @@
 ├─frontend
 │  ├─static
 │  │   ├─css
-|	 |	 ├─images
+│  │	 ├─images
 │  │   └─js  
-|	 |       ├─views
-│  │			 |    ├─AbstractViews.js
-|	 |			 |    ├─Alarm.js
-|	 |			 |    ├─Home.js
-|	 |			 |    ├─Memo.js
-|	 |			 |    └─Photo.js
-|	 |       └─index.js
+│  │       ├─views
+│  │       |    ├─AbstractViews.js
+│  │       |    ├─Alarm.js
+│  │       |    ├─Home.js
+│  │       |    ├─Memo.js
+│  │       |    └─Photo.js
+│  │       └─index.js
 │  └─index.html
 ├─node_modules
 ├─package-lock.json
